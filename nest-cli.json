@@ -1,5 +1,22 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "apps/todo-api/src",
+  "monorepo": true,
+  "root": "apps/todo-api",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/todo-api/tsconfig.app.json"
+  },
+  "projects": {
+    "todo-api": {
+      "type": "application",
+      "root": "apps/todo-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/todo-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/todo-api/tsconfig.app.json"
+      }
+    }
+  }
 }
