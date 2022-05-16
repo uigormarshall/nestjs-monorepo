@@ -7,6 +7,7 @@ export interface UsersRepositoryInterface {
     update(id, updateUserDto: UpdateUserDto): Promise<User>;
     findAll(): Promise<User[]>
     findOne(id: string): Promise<User>
+    findOneByEmail(id: string): Promise<User>
     remove(id: string): Promise<void>
     hasRegisterWithThisEmail(email: string): Promise<boolean>
 }
