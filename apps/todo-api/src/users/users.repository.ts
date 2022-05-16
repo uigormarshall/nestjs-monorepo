@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsersRepositoryInterface } from './contracts/users.repository.interface';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 
@@ -20,9 +21,19 @@ export class UsersRepository implements UsersRepositoryInterface{
     
     return has !== null ? true : false;
   }
+  
+
   async insert(createUserDto: CreateUserDto): Promise<User> {
      const result = await this.usersRepository.insert(createUserDto);
      return this.findOne(result.raw.id);
+  }
+
+  async update(id: any, updateUserDto: UpdateUserDto): Promise<User> {
+     await this.usersRepository.update({
+      id: id
+    }, updateUserDto);
+
+    return this.findOne(id);
   }
 
   findAll(): Promise<User[]> {
