@@ -22,6 +22,10 @@ export class UsersService {
     return this.usersRepository.findOne(id);
   }
 
+  findOneByEmail(email: string) {
+    return this.usersRepository.findOneByEmail(email);
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
     const hasUserWithEmail = await this.usersRepository.hasRegisterWithThisEmail(updateUserDto.email);
     if(hasUserWithEmail) throw new HttpException('Ops! Já existe um usuario com esse email.', HttpStatus.BAD_REQUEST);

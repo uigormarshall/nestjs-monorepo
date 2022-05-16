@@ -41,11 +41,15 @@ export class UsersRepository implements UsersRepositoryInterface{
   }
 
   findOne(id: string): Promise<User> {
-    return this.usersRepository.findOneBy({
+    return this.usersRepository.findOne({
         id: id
     });
   }
-
+  findOneByEmail(email: string): Promise<User> {
+    return this.usersRepository.findOne({
+        email: email
+    });
+  }
   async remove(id: string): Promise<void> {
     await this.usersRepository.delete(id);
   }
