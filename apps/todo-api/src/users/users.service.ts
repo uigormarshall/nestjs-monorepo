@@ -2,8 +2,6 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { UsersRepositoryInterface } from './contracts/users.repository.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UsersRepository } from './users.repository';
-
 
 @Injectable()
 export class UsersService {
@@ -24,8 +22,10 @@ export class UsersService {
     return this.usersRepository.findOne(id);
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const hasUserWithEmail = await this.usersRepository.hasRegisterWithThisEmail(updateUserDto.email);
+    if(hasUserWithEmail) throw new HttpException('Ops! Já existe um usuario com esse email.', HttpStatus.BAD_REQUEST);
+    return this.usersRepository.update(id, updateUserDto);
   }
 
   remove(id: string) {
