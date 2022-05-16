@@ -15,7 +15,7 @@ export class UsersRepository implements UsersRepositoryInterface{
   ) {}
 
   async hasRegisterWithThisEmail(email: string): Promise<boolean> {
-    const has = await this.usersRepository.findOneBy({
+    const has = await this.usersRepository.findOne({
       email: email
     });
     
