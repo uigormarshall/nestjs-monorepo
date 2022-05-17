@@ -2,6 +2,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersMockRepository } from '../shared/mocks/users.mock.repository';
 import { TestUtils } from '../shared/utils/test.utils';
+import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
@@ -55,6 +56,25 @@ describe('UsersService', () => {
       const id = 'um_id_invalido';
       jest.spyOn(repository, 'findOne').mockImplementation(async () => null);
       const result = await service.findOne(id)
+      expect(result).toEqual(null);
+    })
+  })
+
+  describe('FindOneByEmail', () => {
+    it('Dado um Email válido deve retornar o User correspondente', async () => {
+        const userDtoValid = TestUtils.getAValidCreateUserDto();
+        const userValid = TestUtils.getAValidUser(userDtoValid);
+        const email = userValid.email;
+
+        jest.spyOn(repository, 'findOneByEmail').mockImplementation(async () => userValid);
+        const result = await service.findOneByEmail(email)
+        expect(result).toEqual(userValid);
+    })
+
+    it('Dado um email inválido deve retornar null', async () => {
+      const email = 'email_invalido';
+      jest.spyOn(repository, 'findOneByEmail').mockImplementation(async () => null);
+      const result = await service.findOneByEmail(email)
       expect(result).toEqual(null);
     })
   })
