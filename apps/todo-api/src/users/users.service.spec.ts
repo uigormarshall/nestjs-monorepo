@@ -98,4 +98,18 @@ describe('UsersService', () => {
       expect(result[0]).toBeInstanceOf(User);
     })
   })
+
+
+  describe('Update', () => {
+    it('Dado um UpdateUserDto e um id válido deve atualizar o registro', async () => {
+      const AValidupdateUserDto = TestUtils.getAvalidUpdateUserDto();
+      const userValid = TestUtils.getAValidUser(AValidupdateUserDto);
+      const id = TestUtils.getAValidId()
+      jest.spyOn(repository, 'hasRegisterWithThisEmail').mockImplementation(async () => false);
+      jest.spyOn(repository, 'update').mockImplementation(async () => userValid);
+      const result = await service.update(id, AValidupdateUserDto);
+
+      expect(result).toEqual(userValid);
+    })
+  })
 });
