@@ -40,4 +40,22 @@ describe('UsersService', () => {
         expect(service.create(userDtoValid)).rejects.toEqual(new HttpException('Ops! Já existe um usuario com esse email.', HttpStatus.BAD_REQUEST));
     })
   })
+  describe('FindOne', () => {
+    it('Dado um Id válido deve retornar o User correspondente', async () => {
+        const userDtoValid = TestUtils.getAValidCreateUserDto();
+        const userValid = TestUtils.getAValidUser(userDtoValid);
+        const id = userValid.id;
+
+        jest.spyOn(repository, 'findOne').mockImplementation(async () => userValid);
+        const result = await service.findOne(id)
+        expect(result).toEqual(userValid);
+    })
+
+    it('Dado um id inválido deve retornar null', async () => {
+      const id = 'um_id_invalido';
+      jest.spyOn(repository, 'findOne').mockImplementation(async () => null);
+      const result = await service.findOne(id)
+      expect(result).toEqual(null);
+    })
+  })
 });
