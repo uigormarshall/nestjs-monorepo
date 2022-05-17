@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { UsersMockRepository } from '../shared/mocks/users.mock.repository';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
@@ -6,13 +7,13 @@ describe('UsersService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService],
+      providers: [UsersService, { provide: 'UsersRepositoryInterface', useClass: UsersMockRepository }],
     }).compile();
 
     service = module.get<UsersService>(UsersService);
   });
 
-  it('should be defined', () => {
+  it('UsersService deve ser definido', () => {
     expect(service).toBeDefined();
   });
 });
