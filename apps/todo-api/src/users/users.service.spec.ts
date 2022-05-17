@@ -78,4 +78,24 @@ describe('UsersService', () => {
       expect(result).toEqual(null);
     })
   })
+
+  describe('FindAll', () => {
+    it('Dado nenhum resultado no respositorio deve retornar um array vazio', async () => {
+        jest.spyOn(repository, 'findAll').mockImplementation(async () => []);
+        const result = await service.findAll()
+        expect(result).toEqual([]);
+    })
+
+    it('Dado algum resultado no respositorio deve retornar uma lista de User', async () => {
+      const userDtoValid = TestUtils.getAValidCreateUserDto();
+      const userValid = TestUtils.getAValidUser(userDtoValid);
+      const listOfUsers : User[] = []
+      listOfUsers.push(userValid);
+
+      jest.spyOn(repository, 'findAll').mockImplementation(async () => listOfUsers);
+      const result = await service.findAll()
+      expect(Array.isArray(result)).toEqual(true);
+      expect(result[0]).toBeInstanceOf(User);
+    })
+  })
 });
