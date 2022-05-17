@@ -105,11 +105,25 @@ describe('UsersService', () => {
       const AValidupdateUserDto = TestUtils.getAvalidUpdateUserDto();
       const userValid = TestUtils.getAValidUser(AValidupdateUserDto);
       const id = TestUtils.getAValidId()
-      jest.spyOn(repository, 'hasRegisterWithThisEmail').mockImplementation(async () => false);
+      jest.spyOn(repository, 'findOneByEmail').mockImplementation(async () => null);
       jest.spyOn(repository, 'update').mockImplementation(async () => userValid);
       const result = await service.update(id, AValidupdateUserDto);
 
       expect(result).toEqual(userValid);
+    })
+
+    it('Dado um UpdateUserDto com um email já existente em outro usuario deve retornar uma HttpException', async () => {
+      const AValidupdateUserDto = TestUtils.getAvalidUpdateUserDto();
+
+      const userValid = TestUtils.getAValidUser(AValidupdateUserDto);
+      const anotherUserWithSameEmail = TestUtils.getAValidUser(AValidupdateUserDto);
+      anotherUserWithSameEmail.id = 'anotherId';
+
+      const id = userValid.id;
+      jest.spyOn(repository, 'findOneByEmail').mockImplementation(async () => anotherUserWithSameEmail);
+      jest.spyOn(repository, 'update').mockImplementation(async () => userValid);
+
+      expect(service.update(id, AValidupdateUserDto)).rejects.toEqual(new HttpException('Ops! Já existe um outro usuario com esse email.', HttpStatus.BAD_REQUEST));
     })
   })
 });
