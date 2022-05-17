@@ -33,7 +33,6 @@ describe('UsersService', () => {
     })
 
     it('Deve retornar HttpException quando existir um User com mesmo email', async () => {
-        //throw new HttpException('Ops! Já existe um usuario com esse email.', HttpStatus.BAD_REQUEST);
         const userDtoValid = TestUtils.getAValidCreateUserDto();
         const userValid = TestUtils.getAValidUser(userDtoValid);
         jest.spyOn(repository, 'hasRegisterWithThisEmail').mockImplementation(async () => true);
