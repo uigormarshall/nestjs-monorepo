@@ -12,12 +12,13 @@ export class TestUtils {
     }
 
     static getAvalidUpdateUserDto() : UpdateUserDto{
-        const userDto = new UpdateUserDto();
-        userDto.name = "Forest Gump";
-        userDto.email = "forest@gump.com";
-        userDto.password = "bubba";
-        return userDto;
+        const updateDto = new UpdateUserDto();
+        updateDto.name = "Forest Gump";
+        updateDto.email = "forest@gump.com";
+        updateDto.password = "bubba";
+        return updateDto;
     }
+    
     static getAValidUser(userDto: CreateUserDto): User {
         const user = new User();
         user.id = this.getAValidId();
