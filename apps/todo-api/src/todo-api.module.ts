@@ -5,9 +5,10 @@ import { TodoApiService } from './todo-api.service';
 import { typeOrmConfig } from './typeorm.config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule, AuthModule],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule, AuthModule, SharedModule],
   controllers: [TodoApiController],
   providers: [TodoApiService],
 })
