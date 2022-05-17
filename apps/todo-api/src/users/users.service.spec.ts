@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersMockRepository } from '../shared/mocks/users.mock.repository';
 import { TestUtils } from '../shared/utils/test.utils';
@@ -29,6 +30,15 @@ describe('UsersService', () => {
         jest.spyOn(repository, 'insert').mockImplementation(async () => userValid);
         const result = await service.create(userDtoValid)
         expect(result).toEqual(userValid);
+    })
+
+    it('Deve retornar HttpException quando existir um User com mesmo email', async () => {
+        //throw new HttpException('Ops! Já existe um usuario com esse email.', HttpStatus.BAD_REQUEST);
+        const userDtoValid = TestUtils.getAValidCreateUserDto();
+        const userValid = TestUtils.getAValidUser(userDtoValid);
+        jest.spyOn(repository, 'hasRegisterWithThisEmail').mockImplementation(async () => true);
+        jest.spyOn(repository, 'insert').mockImplementation(async () => userValid);
+        expect(service.create(userDtoValid)).rejects.toEqual(new HttpException('Ops! Já existe um usuario com esse email.', HttpStatus.BAD_REQUEST));
     })
   })
 });
