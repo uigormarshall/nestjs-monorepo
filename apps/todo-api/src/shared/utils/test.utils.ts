@@ -1,4 +1,5 @@
 import { CreateUserDto } from "../../users/dto/create-user.dto";
+import { UpdateUserDto } from "../../users/dto/update-user.dto";
 import { User } from "../../users/entities/user.entity";
 
 export class TestUtils {
@@ -10,6 +11,13 @@ export class TestUtils {
         return userDto;
     }
 
+    static getAvalidUpdateUserDto() : UpdateUserDto{
+        const userDto = new UpdateUserDto();
+        userDto.name = "Forest Gump";
+        userDto.email = "forest@gump.com";
+        userDto.password = "bubba";
+        return userDto;
+    }
     static getAValidUser(userDto: CreateUserDto): User {
         const user = new User();
         user.id = this.getAValidId();
