@@ -66,6 +66,10 @@ $ npm run test
 $ npm run test:cov
 
 ```
+
+## Swagger
+Para acessar o swagger basta acessar o http://localhost:3000/api
+
 ## Pontos de melhoria/correção
 
  - [ ] Adicionar bcrypt na geração da senha
