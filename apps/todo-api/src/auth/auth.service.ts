@@ -3,7 +3,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { LoginResultDto } from './dto/login-result.dto';
-
+const bcrypt = require('bcryptjs');
 @Injectable()
 export class AuthService {
   constructor(
@@ -25,7 +25,7 @@ export class AuthService {
      throw new HttpException('Senha inválida', HttpStatus.UNAUTHORIZED);
   }
 
-  private passwordIsEqual(password: string, anotherPassword: string): boolean {
-      return password === anotherPassword ? true : false;
+  private passwordIsEqual(password: string, hash: string): boolean {
+      return bcrypt.compareSync(password, hash); 
   }
 }
