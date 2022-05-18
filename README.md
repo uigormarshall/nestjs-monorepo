@@ -71,8 +71,7 @@ $ npm run test:cov
 Para acessar o swagger basta acessar o http://localhost:3000/api
 
 ## Pontos de melhoria/correção
-
- - [ ] Adicionar bcrypt na geração da senha
+ - [ ] Adicionar bcrypt na comparação de senha
  - [ ]  Remover rota findAll
  - [ ] Mover estrategia de configuração para o .env
  - [ ] Adicionar teste de unidade do usersService.remove
