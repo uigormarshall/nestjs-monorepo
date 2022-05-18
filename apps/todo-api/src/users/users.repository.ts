@@ -19,7 +19,7 @@ export class UsersRepository implements UsersRepositoryInterface{
       email: email
     });
     
-    return has !== null ? true : false;
+    return has !== undefined ? true : false;
   }
   
 
