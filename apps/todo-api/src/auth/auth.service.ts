@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
+import { LoginResultDto } from './dto/login-result.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,8 +17,9 @@ export class AuthService {
      if(!user) throw new HttpException('Usuario inválido', HttpStatus.BAD_GATEWAY);
      
      if(this.passwordIsEqual(loginDto.password, user.password)){
-       const { password, ...payload } = user;
-        return this.jwtService.sign(payload);
+        const { password, ...payload } = user;
+        const token = this.jwtService.sign(payload);
+        return new LoginResultDto(token);
      }
 
      throw new HttpException('Senha inválida', HttpStatus.UNAUTHORIZED);
