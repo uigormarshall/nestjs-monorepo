@@ -1,3 +1,4 @@
+import { LoginDto } from "../../auth/dto/login.dto";
 import { CreateUserDto } from "../../users/dto/create-user.dto";
 import { UpdateUserDto } from "../../users/dto/update-user.dto";
 import { User } from "../../users/entities/user.entity";
@@ -7,7 +8,7 @@ export class TestUtils {
         const userDto = new CreateUserDto();
         userDto.name = "Forest Gump";
         userDto.email = "forest@gump.com";
-        userDto.password = "bubba";
+        userDto.password = "$2y$10$81d1qiun/oQyeRvDcgsPH.DxRBKhfkJh7RAm.UigEhscyytPJWmU.";
         return userDto;
     }
 
@@ -15,7 +16,7 @@ export class TestUtils {
         const updateDto = new UpdateUserDto();
         updateDto.name = "Forest Gump";
         updateDto.email = "forest@gump.com";
-        updateDto.password = "bubba";
+        updateDto.password = "$2y$10$81d1qiun/oQyeRvDcgsPH.DxRBKhfkJh7RAm.UigEhscyytPJWmU.";
         return updateDto;
     }
     
@@ -27,9 +28,16 @@ export class TestUtils {
         user.password = userDto.password;
         return user;
     }
+    
 
     static getAValidId(): string {
         return '9d646267-d9cf-46eb-b412-0ca659ba0ee8';
     }
-   
+    
+    static getALoginDto(){
+        const loginDto = new LoginDto();
+        loginDto.email = "forest@gump.com";
+        loginDto.password = "bubba";
+        return loginDto;
+    }
 }
